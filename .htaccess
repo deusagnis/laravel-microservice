@@ -1,4 +1,4 @@
 <IfModule mod_rewrite.c>
    RewriteEngine on
-   RewriteRule (.*) ./laravelMicroservice/public/$1
+   RewriteRule (.*) ./public/$1
 </IfModule>
