@@ -46,13 +46,13 @@ class Authentication
             $request->all(),
             [
                 // password
-                'p' => ['alpha','min:4','max:64'],
+                'p' => ['alpha_num','min:4','max:64'],
                 // username
-                'u' => ['alpha','min:4','max:64'],
+                'u' => ['alpha_num','min:4','max:64'],
                 // email
                 'e' => ['email','max:128'],
                 // token
-                't' => ['alpha','min:32','max:128'],
+                't' => ['alpha_num','min:32','max:128'],
                 // remember flag
                 'rm' => ['boolean'],
             ]

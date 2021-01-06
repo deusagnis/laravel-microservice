@@ -24,8 +24,8 @@ class AuthController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'password' => ['required','alpha','min:4','max:32'],
-                'username' => ['required','alpha','min:4','max:64'],
+                'password' => ['required','alpha_num','min:4','max:32'],
+                'username' => ['required','alpha_num','min:4','max:64'],
                 'email' => ['required','email','max:128'],
             ]
         );
@@ -79,10 +79,10 @@ class AuthController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'password' => ['alpha','min:4','max:32'],
-                'username' => ['alpha','min:4','max:64'],
+                'password' => ['alpha_num','min:4','max:32'],
+                'username' => ['alpha_num','min:4','max:64'],
                 'email' => ['email','max:128'],
-                'token' => ['string','min:32','max:128'],
+                'token' => ['alpha_num','min:32','max:128'],
                 'remember' => ['boolean'],
             ]
         );
