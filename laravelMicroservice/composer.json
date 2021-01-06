@@ -9,6 +9,14 @@
         "microservice"
     ],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Pavel Eliseev",
+            "email": "deusagnis@gmail.com",
+            "homepage": "https://mggflow.in",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": "^7.2.5|^8.0",
         "fideloper/proxy": "^4.4",
