@@ -59,9 +59,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
-             ->namespace('App\Http\Controllers')
-             ->group(base_path('routes/web.php'));
+        // If app not in root directory need to correct prefix
+        Route::prefix('')
+            ->middleware('web')
+            ->namespace('App\Http\Controllers')
+            ->group(base_path('routes/web.php'));
     }
 
     /**
@@ -73,6 +75,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
+        // If app not in root directory need to correct prefix
         Route::prefix('api')
              ->middleware([
                  'msvc_cookies_encryption',
