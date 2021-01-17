@@ -34,6 +34,11 @@ class Model extends EloquentModel
         });
     }
 
+    /**
+     * Get model table info
+     *
+     * @return false|mixed
+     */
     public function getTableInfo(){
         $info = $this->getConnection()
             ->getPdo()
@@ -46,6 +51,11 @@ class Model extends EloquentModel
     }
 
 
+    /**
+     * Get AutoIncrement for model table
+     *
+     * @return false|mixed
+     */
     public function getAutoIncrement(){
         $info = $this->getTableInfo();
         if(isset($info['Auto_increment'])){
