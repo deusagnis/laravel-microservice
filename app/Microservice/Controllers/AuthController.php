@@ -37,7 +37,7 @@ class AuthController extends Controller
         $result['result'] = $authentication->register(
             $request->input('password'),
             $request->input('username'),
-            $request->input('email'),
+            $request->input('email')
         );
 
         return $result;

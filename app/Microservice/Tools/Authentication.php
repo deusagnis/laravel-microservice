@@ -56,6 +56,8 @@ class Authentication
      */
     protected $currentUser;
 
+    protected $currentUserPwdHash;
+
     /**
      * Authentication constructor.
      *
@@ -256,8 +258,14 @@ class Authentication
      */
     protected function setCurrentUser($userData)
     {
-        if (is_object($userData) and isset($userData->pwdHash)) unset($userData->pwdHash);
-        if (is_array($userData) and isset($userData['pwdHash'])) unset($userData['pwdHash']);
+        if (is_object($userData) and isset($userData->pwdHash)){
+            $this->currentUserPwdHash = $userData->pwdHash;
+            unset($userData->pwdHash);
+        }
+        if (is_array($userData) and isset($userData['pwdHash'])){
+            $this->currentUserPwdHash = $userData['pwdHash'];
+            unset($userData['pwdHash']);
+        }
         $this->currentUser = $userData;
     }
 
@@ -335,7 +343,7 @@ class Authentication
         $currentUser = $this->getCurrentUser();
         if (empty($currentUser)) return false;
 
-        $token = $this->genToken($currentUser);
+        $token = $this->genToken($currentUser,$this->currentUserPwdHash);
         $created = $this->db->table($this->tokensTable)->insertGetId([
             'userId' => $currentUser->id,
             'token' => $token,
@@ -350,11 +358,12 @@ class Authentication
      * Gen access token by user object
      *
      * @param array|object $userData
+     * @param $pwdHash
      * @return string
      */
-    protected function genToken($userData)
+    protected function genToken($userData,$pwdHash)
     {
-        return md5($userData->id . $userData->pwdHash) . md5(microtime());
+        return md5($userData->id . $pwdHash) . md5(microtime());
     }
 
     /**

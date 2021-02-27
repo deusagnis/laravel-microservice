@@ -42,7 +42,7 @@ class ResponseEncoder
             $response = $this->factory->json(
                 $response->content(),
                 $response->status(),
-                $response->headers->all(),
+                $response->headers->all()
             );
         }
 
