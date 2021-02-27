@@ -4,6 +4,7 @@ namespace App\Microservice\Middleware;
 
 use App\Microservice\Tools\ErrorsGenerator;
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 
@@ -49,11 +50,11 @@ class Mapping
     /**
      * Map request to microservice
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $incomingMSVCName = $request->input('msvc');
         $currentMSVCName = env('MICROSERVICE_NAME');
@@ -62,13 +63,11 @@ class Mapping
             $mapping = $this->db::connection($this->connectionName)->table($this->mapTableName)
                 ->where('name','=',mb_strtolower($incomingMSVCName))
                 ->first();
-            if(empty($mapping)){
-                return $this->errorsGenerator->fillResponse(Response::json([]),5);
-            }
-            if($mapping->redirect){
+            if(!empty($mapping) and $mapping->redirect){
                 return Response::redirectTo($mapping->address);
             }
-            // send request throw http
+
+            return $this->errorsGenerator->fillResponse(Response::json([]),5);
         }
 
         return $next($request);
